@@ -28,34 +28,14 @@ namespace MovieRental
 
             foreach (var rental in Rentals)
             {
-                var thisAmount = 0d;
-            
-                switch (rental.Movie.PriceCode)
-                {
-                    case Movie.Childrens:
-                        thisAmount += 2;
-                        if (rental.DaysRented > 2)
-                            thisAmount += (rental.DaysRented - 2) * 1.5;
-                        break;
-                    case Movie.NewRelease:
-                        thisAmount += rental.DaysRented * 3;
-                        break;
-                    case Movie.Regular:
-                        thisAmount += 1.5;
-                        if (rental.DaysRented > 3)
-                            thisAmount += (rental.DaysRented - 3) * 1.5;
-                        break;
-                }
-
-                frequentRenterPoints++;
-                if (rental.Movie.PriceCode == Movie.NewRelease && rental.DaysRented > 1)
-                    frequentRenterPoints++;
+                var thisAmount = rental.Movie.GetPayment(rental.DaysRented);
+                frequentRenterPoints += rental.Movie.GetRenterPoints(rental.DaysRented);
 
                 report.AppendLine($"\t{rental.Movie.Title}\t{thisAmount}");
                 totalAmount += thisAmount;
             }
 
-            report.AppendLine($"Total dept is {totalAmount}");
+            report.AppendLine($"Total debt is {totalAmount}");
             report.AppendLine($"You've earned {frequentRenterPoints} activity points");
             
             return report.ToString();
