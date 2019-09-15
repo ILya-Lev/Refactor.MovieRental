@@ -12,5 +12,11 @@ namespace MovieRental
             Movie = movie;
             DaysRented = daysRented;
         }
+
+        private double? _charge = null;
+        public double Charge => _charge ?? (_charge = Movie.GetPayment(DaysRented)).Value;
+
+        private int? _points = null;
+        public int Points => _points ?? (_points = Movie.GetRenterPoints(DaysRented)).Value;
     }
 }

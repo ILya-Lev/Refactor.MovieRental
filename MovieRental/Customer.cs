@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace MovieRental
@@ -23,22 +24,19 @@ namespace MovieRental
             var report = new StringBuilder();
             report.AppendLine($"Rent report for {Name}");
             
-            int frequentRenterPoints = 0;
-            double totalAmount = 0;
-
             foreach (var rental in Rentals)
             {
-                var thisAmount = rental.Movie.GetPayment(rental.DaysRented);
-                frequentRenterPoints += rental.Movie.GetRenterPoints(rental.DaysRented);
-
-                report.AppendLine($"\t{rental.Movie.Title}\t{thisAmount}");
-                totalAmount += thisAmount;
+                report.AppendLine($"\t{rental.Movie.Title}\t{rental.Charge}");
             }
 
-            report.AppendLine($"Total debt is {totalAmount}");
-            report.AppendLine($"You've earned {frequentRenterPoints} activity points");
+            report.AppendLine($"Total debt is {GetTotalCharge()}");
+            report.AppendLine($"You've earned {GetFrequentRenterPoints()} activity points");
             
             return report.ToString();
         }
+
+        private int GetFrequentRenterPoints() => Rentals.Sum(r => r.Points);
+
+        private double GetTotalCharge() => Rentals.Sum(r => r.Charge);
     }
 }
