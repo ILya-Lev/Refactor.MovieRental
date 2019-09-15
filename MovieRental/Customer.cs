@@ -19,7 +19,7 @@ namespace MovieRental
 
         public void AddRental(Rental rental) => _rentals.Add(rental);
 
-        public string Statement()
+        public string MakeStatement()
         {
             var report = new StringBuilder();
             report.AppendLine($"Rent report for {Name}");
@@ -31,6 +31,22 @@ namespace MovieRental
 
             report.AppendLine($"Total debt is {GetTotalCharge()}");
             report.AppendLine($"You've earned {GetFrequentRenterPoints()} activity points");
+            
+            return report.ToString();
+        }
+
+        public string MakeHtmlStatement()
+        {
+            var report = new StringBuilder();
+            report.AppendLine($"<H1>Rent report for <EM>{Name}</EM></H1><P>");
+            
+            foreach (var rental in Rentals)
+            {
+                report.AppendLine($"{rental.Movie.Title}: {rental.Charge}<BR/>");
+            }
+
+            report.AppendLine($"<P>Total debt is <EM>{GetTotalCharge()}</EM><P>");
+            report.AppendLine($"You've earned <EM>{GetFrequentRenterPoints()}</EM> activity points<P>");
             
             return report.ToString();
         }
