@@ -1,19 +1,36 @@
 ﻿using MovieRental.PointsCalculator;
 using MovieRental.Prices;
+using System;
 
 namespace MovieRental.Movies
 {
     internal class Movie : IMovie
     {
-        private readonly IPrice _price;
-        private readonly IRenterPointsCalculator _points;
+        private readonly Func<MovieType, IPrice> _priceFactory;
+        private readonly Func<MovieType, IRenterPointsCalculator> _pointsFactory;
         public string Title { get; }
-        public MovieType MovieType { get; set; }
 
-        public Movie(string title, MovieType movieType, IPrice price, IRenterPointsCalculator points)
+        private IPrice _price;
+        private IRenterPointsCalculator _points;
+        private MovieType? _movieType = null;
+        public MovieType MovieType
         {
-            _price = price;
-            _points = points;
+            get => _movieType.Value;
+            set
+            {
+                if (value != _movieType)
+                {
+                    _price = _priceFactory(value);
+                    _points = _pointsFactory(value);
+                }
+                _movieType = value;
+            }
+        }
+
+        public Movie(string title, MovieType movieType, Func<MovieType, IPrice> priceFactory, Func<MovieType, IRenterPointsCalculator> pointsFactory)
+        {
+            _priceFactory = priceFactory;
+            _pointsFactory = pointsFactory;
 
             Title = title;
             MovieType = movieType;

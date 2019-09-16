@@ -7,7 +7,7 @@ namespace MovieRental.Movies
     {
         public static IMovie Create(string title, MovieType type)
         {
-            return new Movie(title, type, PriceFactory.Create(type), RenterPointsCalculatorFactory.Create(type));
+            return new Movie(title, type, PriceFactory.Create, RenterPointsCalculatorFactory.Create);
         }
     }
 }
