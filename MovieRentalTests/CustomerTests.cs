@@ -1,7 +1,7 @@
-using System;
 using FluentAssertions;
 using MovieRental;
 using MovieRental.Movies;
+using System;
 using Xunit;
 using Xunit.Sdk;
 
@@ -19,9 +19,9 @@ namespace MovieRentalTests
             _customer = new Customer("John");
             _rentals = new[]
             {
-                new Rental(MovieFactory.CreateNewReleaseMovie("Star Wars III"), 5),
-                new Rental(MovieFactory.CreateChildrensMovie("Star Wars II"), 3),
-                new Rental(MovieFactory.CreateRegularMovie("Star Wars I"), 17),
+                new Rental(MovieFactory.Create("Star Wars III", MovieType.NewRelease), 5),
+                new Rental(MovieFactory.Create("Star Wars II", MovieType.Childrens), 3),
+                new Rental(MovieFactory.Create("Star Wars I", MovieType.Regular), 17),
             };
             foreach (var rental in _rentals)
             {
