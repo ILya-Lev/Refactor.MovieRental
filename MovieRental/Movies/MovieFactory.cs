@@ -1,5 +1,4 @@
-﻿using MovieRental.PointsCalculator;
-using MovieRental.Prices;
+﻿using MovieRental.TraitCalculator;
 
 namespace MovieRental.Movies
 {
@@ -7,7 +6,7 @@ namespace MovieRental.Movies
     {
         public static IMovie Create(string title, MovieType type)
         {
-            return new Movie(title, type, PriceFactory.Create, RenterPointsCalculatorFactory.Create);
+            return new Movie(title, type, TraitCalculatorFactory.Create);
         }
     }
 }

@@ -1,6 +1,6 @@
-﻿namespace MovieRental.Prices
+﻿namespace MovieRental.TraitCalculator
 {
-    public class ChildrenPrice : IPrice
+    public class ChildrenTraitCalculator : ITraitCalculator
     {
         public double GetPayment(int daysRented)
         {
@@ -8,5 +8,7 @@
                 return 2 + (daysRented - 2) * 1.5;
             return 2;
         }
+
+        public int GetRenterPoints(int daysRented) => 1;
     }
 }
