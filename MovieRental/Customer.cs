@@ -23,7 +23,7 @@ namespace MovieRental
         {
             var report = new StringBuilder();
             report.AppendLine($"Rent report for {Name}");
-            
+
             foreach (var rental in Rentals)
             {
                 report.AppendLine($"\t{rental.Movie.Title}\t{rental.Charge}");
@@ -31,7 +31,7 @@ namespace MovieRental
 
             report.AppendLine($"Total debt is {GetTotalCharge()}");
             report.AppendLine($"You've earned {GetFrequentRenterPoints()} activity points");
-            
+
             return report.ToString();
         }
 
@@ -39,7 +39,7 @@ namespace MovieRental
         {
             var report = new StringBuilder();
             report.AppendLine($"<H1>Rent report for <EM>{Name}</EM></H1><P>");
-            
+
             foreach (var rental in Rentals)
             {
                 report.AppendLine($"{rental.Movie.Title}: {rental.Charge}<BR/>");
@@ -47,7 +47,7 @@ namespace MovieRental
 
             report.AppendLine($"<P>Total debt is <EM>{GetTotalCharge()}</EM><P>");
             report.AppendLine($"You've earned <EM>{GetFrequentRenterPoints()}</EM> activity points<P>");
-            
+
             return report.ToString();
         }
 
