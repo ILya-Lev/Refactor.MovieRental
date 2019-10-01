@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace SampleRefactorings.BidirectionalAssociation
 {
@@ -19,6 +20,10 @@ namespace SampleRefactorings.BidirectionalAssociation
                 _customer?.FriendOrders().Add(this);        //add link for new customer to this order
             }
         }
+
+        public double GetDiscountedPrice() => GetGrossPrice() * (1 - _customer.GetDiscount());
+
+        public double GetGrossPrice() => 100500;
     }
 
     public class Customer
@@ -32,5 +37,16 @@ namespace SampleRefactorings.BidirectionalAssociation
 
         //optional
         public void AddOrder(Order anOrder) => anOrder.Customer = this;
+
+        //chaos monkey style 
+        public double GetDiscount() => new Random(DateTime.UtcNow.Millisecond).NextDouble();
+
+        public double GetPriceFor(Order order)
+        {
+            if (Orders.Contains(order))
+                return order.GetDiscountedPrice();
+
+            throw new Exception($"{nameof(Orders)} should contain {order} for customer {this}");
+        }
     }
 }
