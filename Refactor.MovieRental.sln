@@ -7,7 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MovieRental", "MovieRental\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MovieRentalTests", "MovieRentalTests\MovieRentalTests.csproj", "{57701370-60D7-489F-8F94-9CFB132BB535}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleRefactorings", "SampleRefactorings\SampleRefactorings.csproj", "{A22CF22F-08A0-4C43-9E48-41D6C6AB72E9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SampleRefactorings", "SampleRefactorings\SampleRefactorings.csproj", "{A22CF22F-08A0-4C43-9E48-41D6C6AB72E9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleRefactoringTests", "SampleRefactoringTests\SampleRefactoringTests.csproj", "{C1C2148F-6CB3-49D8-A4F6-1CD18231DB5D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{A22CF22F-08A0-4C43-9E48-41D6C6AB72E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A22CF22F-08A0-4C43-9E48-41D6C6AB72E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A22CF22F-08A0-4C43-9E48-41D6C6AB72E9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C1C2148F-6CB3-49D8-A4F6-1CD18231DB5D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C1C2148F-6CB3-49D8-A4F6-1CD18231DB5D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C1C2148F-6CB3-49D8-A4F6-1CD18231DB5D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C1C2148F-6CB3-49D8-A4F6-1CD18231DB5D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
