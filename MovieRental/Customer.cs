@@ -19,40 +19,66 @@ namespace MovieRental
 
         public void AddRental(Rental rental) => _rentals.Add(rental);
 
-        public string MakeStatement()
+        public string MakeStatement() => new TextStatement().Make(this);
+
+        public string MakeHtmlStatement() => new HtmlStatement().Make(this);
+
+        internal int GetFrequentRenterPoints() => Rentals.Sum(r => r.Points);
+
+        internal double GetTotalCharge() => Rentals.Sum(r => r.Charge);
+    }
+
+    internal abstract class Statement
+    {
+        internal string Make(Customer customer)
         {
             var report = new StringBuilder();
-            report.AppendLine($"Rent report for {Name}");
+            report.AppendLine(CreateCaption(customer));
 
-            foreach (var rental in Rentals)
+            foreach (var rental in customer.Rentals)
             {
-                report.AppendLine($"\t{rental.Movie.Title}\t{rental.Charge}");
+                report.AppendLine(CreateOneRentalMessage(rental));
             }
 
-            report.AppendLine($"Total debt is {GetTotalCharge()}");
-            report.AppendLine($"You've earned {GetFrequentRenterPoints()} activity points");
+            report.AppendLine(CreateChargeMessage(customer));
+            report.AppendLine(CreatePointsMessage(customer));
 
             return report.ToString();
         }
 
-        public string MakeHtmlStatement()
-        {
-            var report = new StringBuilder();
-            report.AppendLine($"<H1>Rent report for <EM>{Name}</EM></H1><P>");
+        protected abstract string CreateCaption(Customer customer);
+        protected abstract string CreateOneRentalMessage(Rental rental);
+        protected abstract string CreateChargeMessage(Customer customer);
+        protected abstract string CreatePointsMessage(Customer customer);
+    }
 
-            foreach (var rental in Rentals)
-            {
-                report.AppendLine($"{rental.Movie.Title}: {rental.Charge}<BR/>");
-            }
+    internal class TextStatement : Statement
+    {
+        protected override string CreateCaption(Customer customer)
+            => $"Rent report for {customer.Name}";
 
-            report.AppendLine($"<P>Total debt is <EM>{GetTotalCharge()}</EM><P>");
-            report.AppendLine($"You've earned <EM>{GetFrequentRenterPoints()}</EM> activity points<P>");
+        protected override string CreateOneRentalMessage(Rental rental)
+            => $"\t{rental.Movie.Title}\t{rental.Charge}";
 
-            return report.ToString();
-        }
+        protected override string CreateChargeMessage(Customer customer)
+            => $"Total debt is {customer.GetTotalCharge()}";
 
-        private int GetFrequentRenterPoints() => Rentals.Sum(r => r.Points);
+        protected override string CreatePointsMessage(Customer customer)
+            => $"You've earned {customer.GetFrequentRenterPoints()} activity points";
+    }
 
-        private double GetTotalCharge() => Rentals.Sum(r => r.Charge);
+    internal class HtmlStatement : Statement
+    {
+        protected override string CreateCaption(Customer customer)
+            => $"<H1>Rent report for <EM>{customer.Name}</EM></H1><P>";
+
+        protected override string CreateOneRentalMessage(Rental rental)
+            => $"{rental.Movie.Title}: {rental.Charge}<BR/>";
+
+        protected override string CreateChargeMessage(Customer customer)
+            => $"<P>Total debt is <EM>{customer.GetTotalCharge()}</EM><P>";
+
+        protected override string CreatePointsMessage(Customer customer)
+            => $"You've earned <EM>{customer.GetFrequentRenterPoints()}</EM> activity points<P>";
     }
 }
