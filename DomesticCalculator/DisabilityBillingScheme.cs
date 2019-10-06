@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 
-[assembly:InternalsVisibleTo("DomesticCalculator.Tests")]
+[assembly: InternalsVisibleTo("DomesticCalculator.Tests")]
 
 namespace DomesticCalculator
 {
-    public class DisabilityBillingScheme : BillingScheme
+    public class DisabilityBillingScheme : ABillingScheme<DisabilityCustomer>
     {
         internal static readonly Dictionary<int, double> _factors = new Dictionary<int, double>()
         {
@@ -16,18 +16,13 @@ namespace DomesticCalculator
             [4] = 0.15,
         };
 
-        public override double GetPowerBill(Customer customer)
-        {
-            if (customer is DisabilityCustomer disabilityCustomer)
-            {
-                return base.GetPowerBill(disabilityCustomer)
-                       * GetDisabilityFactor(disabilityCustomer.DisabilityGroup);
-            }
+        public DisabilityBillingScheme(BucketCalculator calculator) : base(calculator) { }
 
-            throw new Exception($"{nameof(DisabilityBillingScheme)} cannot work with any type other than {nameof(DisabilityCustomer)}");
+        public override double GetPowerBill(DisabilityCustomer customer)
+        {
+            return base.GetPowerBill(customer) * GetDisabilityFactor(customer.DisabilityGroup);
         }
 
         private double GetDisabilityFactor(int disabilityGroup) => _factors[disabilityGroup];
-
     }
 }

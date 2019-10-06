@@ -24,7 +24,7 @@ namespace DomesticCalculator.Tests
         public void GetPowerBill_Customer_MatchExpectations(int consumption, double totalPrice)
         {
             var customer = new Customer() { PowerConsumptionInLastMonth = consumption };
-            var scheme = new BillingScheme();
+            var scheme = new BillingScheme(new BucketCalculator());
 
             var powerBill = scheme.GetPowerBill(customer);
 
@@ -36,7 +36,7 @@ namespace DomesticCalculator.Tests
         public void GetPowerBill_CustomerNegative_Exception()
         {
             var customer = new Customer() { PowerConsumptionInLastMonth = -10 };
-            var scheme = new BillingScheme();
+            var scheme = new BillingScheme(new BucketCalculator());
 
             Action billCalculation = () => scheme.GetPowerBill(customer);
 
@@ -54,7 +54,7 @@ namespace DomesticCalculator.Tests
         public void GetPowerBill_DisabledCustomer_MatchExpectations(int consumption, int disabilityGroup, double totalPrice)
         {
             var customer = new DisabilityCustomer(disabilityGroup) { PowerConsumptionInLastMonth = consumption };
-            var scheme = new DisabilityBillingScheme();
+            var scheme = new DisabilityBillingScheme(new BucketCalculator());
 
             var powerBill = scheme.GetPowerBill(customer);
 
