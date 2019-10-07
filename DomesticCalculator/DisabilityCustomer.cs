@@ -2,8 +2,9 @@
 
 namespace DomesticCalculator
 {
-    public class DisabilityCustomer : Customer
+    public class DisabilityCustomer : ICustomer
     {
+        public int PowerConsumptionInLastMonth { get; set; }
         public int DisabilityGroup { get; }
 
         public DisabilityCustomer(int disabilityGroup)

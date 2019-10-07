@@ -4,7 +4,7 @@ namespace DomesticCalculator
 {
     public class BucketCalculator
     {
-        public double CalculatePowerBill<T>(int consumption, IBillingScheme<T> billingScheme) where T : Customer
+        public double CalculatePowerBill(int consumption, IPriceBuckets buckets)
         {
             if (consumption < 0)
             {
@@ -15,19 +15,19 @@ namespace DomesticCalculator
             var total = 0d;
 
             var rest = consumption;
-            for (int i = 0; i < billingScheme.PriceBuckets.Count; i++)
+            for (int i = 0; i < buckets.PriceBuckets.Count; i++)
             {
                 var bucketConsumption = i > 0
-                    ? billingScheme.PriceBuckets[i].Limit - billingScheme.PriceBuckets[i - 1].Limit
-                    : billingScheme.PriceBuckets[i].Limit;
+                    ? buckets.PriceBuckets[i].Limit - buckets.PriceBuckets[i - 1].Limit
+                    : buckets.PriceBuckets[i].Limit;
 
                 if (rest <= bucketConsumption)
                 {
-                    total += rest * billingScheme.PriceBuckets[i].Price;
+                    total += rest * buckets.PriceBuckets[i].Price;
                     break;
                 }
 
-                total += bucketConsumption * billingScheme.PriceBuckets[i].Price;
+                total += bucketConsumption * buckets.PriceBuckets[i].Price;
                 rest -= bucketConsumption;
             }
 

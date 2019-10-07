@@ -6,7 +6,7 @@ namespace DomesticCalculator
     /// needed as contains duplicated (so far) code - PriceBuckets values
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public abstract class ABillingScheme<T> : IBillingScheme<T> where T : Customer
+    public abstract class ABillingScheme<T> : IPriceBuckets where T : ICustomer
     {
         private readonly BucketCalculator _calculator;
 
